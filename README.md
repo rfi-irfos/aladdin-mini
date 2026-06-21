@@ -1,11 +1,11 @@
-# aladdin-mini
-
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![MT5](https://img.shields.io/badge/broker-AvaTrade%20MT5-orange.svg)](https://www.avatrade.com/)
 [![50 Parameters](https://img.shields.io/badge/model-50%20parameters-purple.svg)](#the-50-parameters)
 [![SHS](https://img.shields.io/badge/system-Simeon%20Hedge%20System-red.svg)](#shs-position-system)
 [![Credo](https://img.shields.io/badge/credo-sniper%2C%20not%20machine%20gun-black.svg)](#)
+
+# aladdin-mini
 
 open-source disclosure impact trading signal engine + position management system.
 
