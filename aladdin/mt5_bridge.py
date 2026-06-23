@@ -149,3 +149,41 @@ def aladdin_signal_to_shs(result: CascadeOutput, symbol: str) -> tuple:
     }
     direction = signal_map.get(result.signal)
     return direction, result.confidence
+
+
+def write_signal_file(
+    result: CascadeOutput,
+    path: str,
+    buffett_tier: str = "unknown",
+    company: str = "",
+) -> None:
+    """Write a pipe-delimited signal file readable by AladdinMiniEA.mq5.
+
+    Format: SIGNAL|CONFIDENCE|SCORE|BUFFETT_TIER|COMPANY|TIMESTAMP_ISO
+    Example: STRONG_SHORT|0.64|91.4|elevated|PayPal (PYPL)|2026-06-23T09:12:00
+
+    The MT5 EA reads MQL5/Files/<filename> on the MT5 machine.
+    On Linux/Wine: typically ~/.wine/drive_c/users/<user>/AppData/Roaming/
+                            MetaQuotes/Terminal/<ID>/MQL5/Files/
+
+    Args:
+        result: CascadeOutput from compute().
+        path: Full filesystem path to write (e.g. 'aladdin_signal.txt' or abs path).
+        buffett_tier: From fundamentals.check_fundamentals().valuation_tier.
+        company: Company name for the EA comment field.
+    """
+    import datetime
+    ts = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    line = "|".join([
+        result.signal,
+        f"{result.confidence:.2f}",
+        f"{result.disclosure_impact_score:.1f}",
+        buffett_tier,
+        company or result.signal,
+        ts,
+    ])
+    with open(path, "w") as f:
+        f.write(line + "\n")
+    print(f"[mt5] signal file written: {path}")
+    print(f"[mt5] content: {line}")
+    print("[mt5] copy to [MT5_Data]/MQL5/Files/aladdin_signal.txt on the MT5 machine")
