@@ -120,8 +120,11 @@ string ReadSignal()
     string parts[];
     int n = StringSplit(line, '|', parts);
 
-    string sig = StringTrimRight(StringTrimLeft(n > 0 ? parts[0] : "NEUTRAL"));
-    g_company   = n > 4 ? StringTrimRight(StringTrimLeft(parts[4])) : "unknown";
+    string sig = n > 0 ? parts[0] : "NEUTRAL";
+    StringTrimLeft(sig); StringTrimRight(sig);
+
+    g_company = n > 4 ? parts[4] : "unknown";
+    StringTrimLeft(g_company); StringTrimRight(g_company);
 
     return sig;
 }
